@@ -4,7 +4,7 @@
 
 static int year = 0, day = 0;
 
-void init(void) 
+void init(void)
 {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_FLAT);
@@ -15,25 +15,55 @@ void display(void)
    glClear (GL_COLOR_BUFFER_BIT);
    glColor3f (1.0, 1.0, 1.0);
 
+
+   //## Adicionando planeta
    glPushMatrix();
-   glutWireSphere(1.0, 20, 16);   /* draw sun */
+   glutWireSphere(1.0, 20, 20);   /* draw sun */
    glRotatef ((GLfloat) year, 0.0, 1.0, 0.0);
    glTranslatef (2.0, 0.0, 0.0);
    glRotatef ((GLfloat) day, 0.0, 1.0, 0.0);
-   glutWireSphere(0.2, 10, 8);    /* draw smaller planet */
+   glutWireSphere(0.2, 10.0, 10.0);    /* draw smaller planet */
+
+   // ## Adicionando Lua do planeta
+   glPushMatrix();
+   glRotatef((GLfloat)day, 0.0, 1.0, 0.0);
+   glTranslatef(0.5, 0.0, 0.0);
+   glutWireSphere(0.1, 8.0, 8.0);
    glPopMatrix();
+
+   glPopMatrix();
+
+
+   //## Adicionando planeta
+   glPushMatrix();
+   glutWireSphere(1.0, 20, 20);   /* draw sun */
+   glRotatef ((GLfloat) year + 90, 0.0, 1.0, 0.0);
+   glTranslatef (2.0, 0.0, 0.0);
+   glRotatef ((GLfloat) day, 0.0, 1.0, 0.0);
+   glutWireSphere(0.2, 10.0, 10.0);    /* draw smaller planet */
+
+   // ## Adicionando Lua do planeta
+   glPushMatrix();
+   glRotatef((GLfloat)day, 0.0, 1.0, 0.0);
+   glTranslatef(0.5, 0.0, 0.0);
+   glutWireSphere(0.1, 8.0, 8.0);
+   glPopMatrix();
+
+   glPopMatrix();
+
+
    glutSwapBuffers();
 }
 
 void reshape (int w, int h)
 {
-   glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
+   glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity ();
    gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 1.0, 20.0);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+   gluLookAt (0.0, 1.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }
 
 void keyboard (unsigned char key, int x, int y)
@@ -41,6 +71,7 @@ void keyboard (unsigned char key, int x, int y)
    switch (key) {
       case 'd':
          day = (day + 10) % 360;
+         if(day%200)year++;
          glutPostRedisplay();
          break;
       case 'D':
@@ -64,14 +95,13 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-   glutInitWindowSize (500, 500); 
+   glutInitWindowSize (500, 500);
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
    init ();
-   glutDisplayFunc(display); 
+   glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
-   //glutIdleFunc(idle);
    glutMainLoop();
    return 0;
 }
