@@ -4,7 +4,7 @@
 
 static int year = 0, day = 0;
 
-void init(void) 
+void init(void)
 {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_FLAT);
@@ -27,31 +27,31 @@ void display(void)
 
 void reshape (int w, int h)
 {
-   glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
+   glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity ();
    gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 1.0, 20.0);
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+   gluLookAt (0.0, 1.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }
 
 void keyboard (unsigned char key, int x, int y)
 {
    switch (key) {
-      case `d':
+      case 'd':
          day = (day + 10) % 360;
          glutPostRedisplay();
          break;
-      case `D':
+      case 'D':
          day = (day - 10) % 360;
          glutPostRedisplay();
          break;
-      case `y':
+      case 'y':
          year = (year + 5) % 360;
          glutPostRedisplay();
          break;
-      case `Y':
+      case 'Y':
          year = (year - 5) % 360;
          glutPostRedisplay();
          break;
@@ -64,11 +64,11 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-   glutInitWindowSize (500, 500); 
+   glutInitWindowSize (500, 500);
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
    init ();
-   glutDisplayFunc(display); 
+   glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutKeyboardFunc(keyboard);
    glutMainLoop();

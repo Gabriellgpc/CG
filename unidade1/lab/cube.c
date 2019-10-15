@@ -2,7 +2,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-void init(void) 
+void init(void)
 {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_FLAT);
@@ -11,21 +11,23 @@ void init(void)
 void display(void)
 {
    glClear (GL_COLOR_BUFFER_BIT);
-   glColor3f (1.0, 1.0, 1.0);
    glLoadIdentity ();             /* clear the matrix */
            /* viewing transformation  */
-   gluLookAt (0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-   glScalef (1.0, 2.0, 1.0);      /* modeling transformation */ 
+   gluLookAt (-2.5, 2.5, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0); //(from, at, vup)
+   // glTranslatef(0.0, 0.0, -5.0);
+
+   glColor3f (0.0, 1.0, 1.0);
+   glScalef (1.0, 2.0, 1.0);      /* modeling transformation */
    glutWireCube (1.0);
-   glFlush ();
+   glFlush();
 }
 
 void reshape (int w, int h)
 {
-   glViewport (0, 0, (GLsizei) w, (GLsizei) h); 
+   glViewport (0, 0, (GLsizei) w, (GLsizei) h);
    glMatrixMode (GL_PROJECTION);
    glLoadIdentity ();
-   glFrustum (-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);
+   gluPerspective(60, w/h, 1.0, 10);
    glMatrixMode (GL_MODELVIEW);
 }
 
@@ -33,11 +35,11 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
-   glutInitWindowSize (500, 500); 
+   glutInitWindowSize (500, 500);
    glutInitWindowPosition (0, 0);
    glutCreateWindow (argv[0]);
    init ();
-   glutDisplayFunc(display); 
+   glutDisplayFunc(display);
    glutReshapeFunc(reshape);
    glutMainLoop();
    return 0;
