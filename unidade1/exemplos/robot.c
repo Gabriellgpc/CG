@@ -2,32 +2,6 @@
 #include <stdlib.h>
 
 static int shoulder = 0, elbow = 0;
-static int dedo[3] = {0, 0, 0};
-
-void eixos(void)
-{
-  // Z
-  glPushMatrix();
-  glColor3f(0.0, 0.0, 1.0);
-  glutSolidCone(0.1, 0.5, 5, 5);
-  glPopMatrix();
-
-  // Y
-  glPushMatrix();
-  glRotatef(-90.0, 1.0, 0.0, 0.0);
-  glColor3f(0.0, 1.0, 0.0);
-  glutSolidCone(0.1, 0.5, 5, 5);
-  glPopMatrix();
-
-  // X
-  glPushMatrix();
-  glRotatef(90.0, 0.0, 1.0, 0.0);
-  glColor3f(1.0, 0.0, 0.0);
-  glutSolidCone(0.1, 0.5, 5, 5);
-  glPopMatrix();
-
-  glColor3f(1.0, 1.0, 1.0);
-}
 
 void init(void){
   glClearColor (0.0, 0.0, 0.0, 0.0);
@@ -35,12 +9,12 @@ void init(void){
 
 void display(void){
   glClear (GL_COLOR_BUFFER_BIT);
-
   glPushMatrix();
 
   /* origem posicionada no ombro */
   glTranslatef (-1.0, 0.0, 0.0);
   glRotatef ((GLfloat) shoulder, 0.0, 0.0, 1.0);
+
   /* origem posicionada no centro do braço */
   glTranslatef (1.0, 0.0, 0.0);
   glPushMatrix();
@@ -52,37 +26,9 @@ void display(void){
   glTranslatef (1.0, 0.0, 0.0);
   glRotatef ((GLfloat) elbow, 0.0, 0.0, 1.0);
   glTranslatef (1.0, 0.0, 0.0);
-
   glPushMatrix();
   glScalef (2.0, 0.4, 1.0);
   glutWireCube (1.0);
-  glPopMatrix();
-
-  /* origem posicionada na palma da mao */
-  glTranslatef(1.0, 0.0, 0.0);
-  eixos();
-  //Dedo 1
-  glPushMatrix();
-  glRotatef ((GLfloat) dedo[0], 0.0, 0.0, 1.0);
-  glScaled(2.0, 1.0, 1.0);
-  glTranslatef(0.1, 0.25, 0.5);
-  glutWireCube(0.2);
-  glPopMatrix();
-
-  //Dedo 2
-  glPushMatrix();
-  glRotatef ((GLfloat) dedo[1], 0.0, 0.0, 1.0);
-  glScaled(2.0, 1.0, 1.0);
-  glTranslatef(0.1, 0.25, -0.5);
-  glutWireCube(0.2);
-  glPopMatrix();
-
-  //Dedo 3
-  glPushMatrix();
-  glRotatef ((GLfloat) dedo[2], 0.0, 0.0, 1.0);
-  glScaled(2.0, 1.0, 1.0);
-  glTranslatef(0.1, -0.25, 0.0);
-  glutWireCube(0.2);
   glPopMatrix();
 
   /* origem volta para o sistema de coordenadas original */
@@ -97,7 +43,7 @@ void reshape (int w, int h){
   gluPerspective(65.0, (GLfloat) w/(GLfloat) h, 1.0, 20.0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  gluLookAt(5.0, 2.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  glTranslatef (0.0, 0.0, -5.0);
 }
 
 void keyboard (unsigned char key, int x, int y){
@@ -118,31 +64,6 @@ void keyboard (unsigned char key, int x, int y){
     elbow = (elbow - 5) % 360;
     glutPostRedisplay();
     break;
-  case 'j':
-    dedo[0] = (dedo[0] - 5) % 360;
-    glutPostRedisplay();
-    break;
-  case 'J':
-    dedo[0] = (dedo[0] + 5) % 360;
-    glutPostRedisplay();
-    break;
-  case 'k':
-    dedo[1] = (dedo[1] - 5) % 360;
-    glutPostRedisplay();
-    break;
-  case 'K':
-    dedo[1] = (dedo[1] + 5) % 360;
-    glutPostRedisplay();
-    break;
-  case 'l':
-    dedo[2] = (dedo[2] + 5) % 360;
-    glutPostRedisplay();
-    break;
-  case 'L':
-    dedo[2] = (dedo[2] - 5) % 360;
-    glutPostRedisplay();
-    break;
-
   case 27:
     exit(0);
     break;
