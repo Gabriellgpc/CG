@@ -77,6 +77,7 @@ void display(void){
   glutWireCube(0.2);
   glPopMatrix();
 
+
   //Dedo 3
   glPushMatrix();
   glRotatef ((GLfloat) dedo[2], 0.0, 0.0, 1.0);
