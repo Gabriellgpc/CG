@@ -5,11 +5,7 @@
 
 static GLfloat spin = 0.0;
 
-<<<<<<< HEAD
-void init(void) 
-=======
 void init(void)
->>>>>>> 7b6f94671ff70ed7b4b1193fb9b7fe313056a2db
 {
    glClearColor (0.0, 0.0, 0.0, 0.0);
    glShadeModel (GL_FLAT);
@@ -28,9 +24,9 @@ void display(void)
 
 void spinDisplay(void)
 {
-   spin = spin + 2.0;
-   if (spin > 360.0)
-      spin = spin - 360.0;
+   spin = spin - 2.0;
+   if (spin < 0.0)
+      spin = spin + 360.0;
    glutPostRedisplay();
 }
 
@@ -44,11 +40,7 @@ void reshape(int w, int h)
    glLoadIdentity();
 }
 
-<<<<<<< HEAD
-void mouse(int button, int state, int x, int y) 
-=======
 void mouse(int button, int state, int x, int y)
->>>>>>> 7b6f94671ff70ed7b4b1193fb9b7fe313056a2db
 {
    switch (button) {
       case GLUT_LEFT_BUTTON:
@@ -64,11 +56,7 @@ void mouse(int button, int state, int x, int y)
    }
 }
 
-<<<<<<< HEAD
-/* 
-=======
 /*
->>>>>>> 7b6f94671ff70ed7b4b1193fb9b7fe313056a2db
  *  Request double buffer display mode.
  *  Register mouse input callback functions
  */
@@ -76,21 +64,12 @@ int main(int argc, char** argv)
 {
    glutInit(&argc, argv);
    glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
-<<<<<<< HEAD
-   glutInitWindowSize (250, 250); 
-   glutInitWindowPosition (100, 100);
-   glutCreateWindow (argv[0]);
-   init ();
-   glutDisplayFunc(display); 
-   glutReshapeFunc(reshape); 
-=======
    glutInitWindowSize (250, 250);
    glutInitWindowPosition (100, 100);
    glutCreateWindow (argv[0]);
    init ();
    glutDisplayFunc(display);
    glutReshapeFunc(reshape);
->>>>>>> 7b6f94671ff70ed7b4b1193fb9b7fe313056a2db
    glutMouseFunc(mouse);
    glutMainLoop();
    return 0;
