@@ -22,8 +22,8 @@ void init(void)
 void display(void)
 {
 	   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-       glutSolidSphere (1.0, 5, 5);
-       glFlush ();
+     glutSolidSphere (1.0, 5, 5);
+     glFlush ();
 }
 
 void reshape (int w, int h)

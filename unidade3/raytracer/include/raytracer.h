@@ -1,7 +1,8 @@
-#include "utils.h"
+#include "utils"
+#include "world.h"
+#include "viewerdata.h"
 
-#include "scenario.h"
-
+//Classe de imagem em float, util para pintar com glDrawPixels no formato RGB com tipo GL_FLOAT
 class ImageRGBf{
 public:
   float *data;
@@ -15,16 +16,18 @@ public:
   float &operator()(uint i, uint j, uint k);
 };
 
-
 class RayTracer{
 public:
-  Scenario &scene;
-
-  RayTracer(const Scenario &scene);
-  void rayTrace(ImageRGBf &img,int numRefletion);
+  World      world;
+  ViewerData viewer;
+public:
+  RayTracer();
+  //Metodo de renderizacao
+  //WARNING: levar em conta objetos fora do frustum ??
+  void rayTrace(ImageRGBf &img, int numRefletion);
 private:
-  void trace(const Vec &ray, uint n, Vec &color);
-  void closestPoint(const Vec &ray,Vec &point);
-  void shade(const Vec &point,const Vec &ray,const Vec &color);
-  void toWorld(glm::vec3 &win);
+  //metodos auxiliares
+  Vec trace(const Vec &ray, int n);           //Traca um raio saindo de um pixel e retorna uma cor
+  void closestPoint(const Vec &ray,Vec &point);             //Calcula ponto de intersecao entre o raio e o objeto mais proximo
+  void shade(const Vec &point,const Vec &ray,Vec &color);   //Aplica a equacao de iluminacao, retorna uma cor
 };
